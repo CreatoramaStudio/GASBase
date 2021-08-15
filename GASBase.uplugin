@@ -1,0 +1,36 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "GASBase",
+	"Description": "Unreal Engine plugin that contains base classes to implement the Gameplay Ability System",
+	"Category": "Other",
+	"CreatedBy": "Z-Pass Software",
+	"CreatedByURL": "https://github.com/ZPassSoftware",
+	"DocsURL": "https://github.com/ZPassSoftware/GASBase",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/ZPassSoftware/GASBase",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "GASBase",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"GameplayAbilities",
+				"AIModule",
+				"UMG"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
+		}
+	]
+}
