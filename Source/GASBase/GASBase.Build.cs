@@ -33,6 +33,10 @@ public class GASBase : ModuleRules
 			new string[]
 			{
 				"Core",
+				"AIModule",
+				"GameplayAbilities",
+				"GameplayTasks",
+				"GameplayTags",
 				// ... add other public dependencies that you statically link with here ...
 			}
 		);
@@ -46,10 +50,6 @@ public class GASBase : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"AIModule",
-				"GameplayAbilities",
-				"GameplayTasks",
-				"GameplayTags",
 				// ... add private dependencies that you statically link with here ...	
 			}
 		);

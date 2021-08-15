@@ -3,3 +3,7 @@
 
 #include "AI/GASAIController.h"
 
+AGASAIController::AGASAIController()
+{
+	bWantsPlayerState = true;
+}
