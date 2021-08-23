@@ -43,10 +43,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASCharacter")
 	FText CharacterName;
 
-	// Death Animation
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASCharacter|Animation")
-	UAnimMontage* DeathMontage;
-
 	// Default abilities for this Character. These will be removed on Character death and regiven if Character respawns.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASCharacter|Abilities")
 	TArray<TSubclassOf<UGASGameplayAbility>> CharacterAbilities;

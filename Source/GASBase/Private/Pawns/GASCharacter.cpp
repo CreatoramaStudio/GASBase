@@ -156,14 +156,8 @@ void AGASCharacter::Die()
 		AbilitySystemComponent->AddLooseGameplayTag(DeadTag);
 	}
 
-	if (DeathMontage)
-	{
-		PlayAnimMontage(DeathMontage);
-	}
-	else
-	{
-		FinishDying();
-	}
+	
+	FinishDying();
 }
 
 void AGASCharacter::FinishDying()
