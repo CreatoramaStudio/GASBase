@@ -6,12 +6,14 @@
 #include "Pawns/GASCharacter.h"
 #include "Pawns/AbilitySystem/GASAbilitySystemComponent.h"
 #include "Pawns/AbilitySystem/GASAttributeSet.h"
-#include "Player/GASPlayerController.h"
 
-AGASPlayerState::AGASPlayerState()
+FName AGASPlayerState::AbilitySystemComponentName(TEXT("AbilitySystemComponent"));
+FName AGASPlayerState::AttributeSetName(TEXT("AttributeSet"));
+
+AGASPlayerState::AGASPlayerState(const FObjectInitializer& ObjectInitializer)
 {
 	// Create ability system component, and set it to be explicitly replicated
-	AbilitySystemComponent = CreateDefaultSubobject<UGASAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent = CreateDefaultSubobject<UGASAbilitySystemComponent>(AbilitySystemComponentName);
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	// Mixed mode means we only are replicated the GEs to ourself, not the GEs to simulated proxies. If another PPPlayerState (Hero) receives a GE,
@@ -21,7 +23,7 @@ AGASPlayerState::AGASPlayerState()
 	// Create the attribute set, this replicates by default
 	// Adding it as a subobject of the owning actor of an AbilitySystemComponent
 	// automatically registers the AttributeSet with the AbilitySystemComponent
-	AttributeSet = CreateDefaultSubobject<UGASAttributeSet>(TEXT("AttributeSet"));
+	AttributeSet = CreateDefaultSubobject<UGASAttributeSet>(AttributeSetName);
 
 	// Set PlayerState's NetUpdateFrequency to the same as the Character.
 	// Default is very low for PlayerStates and introduces perceived lag in the ability system.
@@ -133,58 +135,30 @@ void AGASPlayerState::MaxHealthChanged(const FOnAttributeChangeData& Data)
 {
 	float MaxHealth = Data.NewValue;
 
-	// Update floating status bar
-	//APPMainCharacter* Character = Cast<APPMainCharacter>(GetPawn());
-	if (AGASCharacter* Character = Cast<AGASCharacter>(GetPawn()))
-	{
-	}
-
-	if (AGASPlayerController* PlayerController = Cast<AGASPlayerController>(GetOwner()))
-	{
-	}
 }
 
 void AGASPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData& Data)
 {
 	float HealthRegenRate = Data.NewValue;
 
-	if (AGASPlayerController* PlayerController = Cast<AGASPlayerController>(GetOwner()))
-	{
-		
-	}
 }
 
 void AGASPlayerState::XPChanged(const FOnAttributeChangeData& Data)
 {
 	float XP = Data.NewValue;
 
-	// Update the HUD
-	if (AGASPlayerController* PlayerController = Cast<AGASPlayerController>(GetOwner()))
-	{
-		
-	}
 }
 
 void AGASPlayerState::GoldChanged(const FOnAttributeChangeData& Data)
 {
 	float Gold = Data.NewValue;
 
-	// Update the HUD
-	if (AGASPlayerController* PlayerController = Cast<AGASPlayerController>(GetOwner()))
-	{
-		
-	}
 }
 
 void AGASPlayerState::CharacterLevelChanged(const FOnAttributeChangeData& Data)
 {
 	float CharacterLevel = Data.NewValue;
 
-	// Update the HUD
-	if (AGASPlayerController* PlayerController = Cast<AGASPlayerController>(GetOwner()))
-	{
-		
-	}
 }
 
 void AGASPlayerState::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)

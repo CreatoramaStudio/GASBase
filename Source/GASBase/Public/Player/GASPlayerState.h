@@ -17,7 +17,8 @@ UCLASS()
 class GASBASE_API AGASPlayerState : public APlayerState , public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-	public:
+	
+public:
 
 protected:
 
@@ -25,8 +26,14 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	UGASAbilitySystemComponent* AbilitySystemComponent;
 
+	/** Name of the Ability System component. Use this name if you want to use a different class (with ObjectInitializer.SetDefaultSubobjectClass). */
+	static FName AbilitySystemComponentName;
+
 	UPROPERTY()
 	UGASAttributeSet* AttributeSet;
+
+	/** Name of the AttributeSet. Use this name if you want to use a different class (with ObjectInitializer.SetDefaultSubobjectClass). */
+	static FName  AttributeSetName;
 	
 	FGameplayTag DeadTag;
 
@@ -42,7 +49,7 @@ private:
 public:
 
 	// Sets default values for this PlayerState properties
-	AGASPlayerState();
+	AGASPlayerState(const FObjectInitializer& ObjectInitializer);
 
 	// Implement IAbilitySystemInterface
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;

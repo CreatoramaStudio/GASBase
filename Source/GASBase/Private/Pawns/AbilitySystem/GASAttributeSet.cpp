@@ -136,15 +136,15 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 						UGameplayEffect* GEBounty = NewObject<UGameplayEffect>(GetTransientPackage(), FName(TEXT("Bounty")));
 						GEBounty->DurationPolicy = EGameplayEffectDurationType::Instant;
 
-						const int32 Idx = GEBounty->Modifiers.Num();
-						GEBounty->Modifiers.SetNum(Idx + 2);
+						const int32 Index = GEBounty->Modifiers.Num();
+						GEBounty->Modifiers.SetNum(Index + 2);
 
-						FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[Idx];
+						FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[Index];
 						InfoXP.ModifierMagnitude = FScalableFloat(GetXPBounty());
 						InfoXP.ModifierOp = EGameplayModOp::Additive;
 						InfoXP.Attribute = UGASAttributeSet::GetXPAttribute();
 
-						FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Idx + 1];
+						FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Index + 1];
 						InfoGold.ModifierMagnitude = FScalableFloat(GetGoldBounty());
 						InfoGold.ModifierOp = EGameplayModOp::Additive;
 						InfoGold.Attribute = UGASAttributeSet::GetGoldAttribute();
