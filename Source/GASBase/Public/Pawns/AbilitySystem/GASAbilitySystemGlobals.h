@@ -20,8 +20,8 @@ class GASBASE_API UGASAbilitySystemGlobals : public UAbilitySystemGlobals
 
 	/**
 	* Cache commonly used tags here. This has the benefit of one place to set the tag FName in case tag names change and
-	* the function call into UGSAbilitySystemGlobals::GSGet() is cheaper than calling FGameplayTag::RequestGameplayTag().
-	* Classes can access them by UGSAbilitySystemGlobals::GSGet().DeadTag
+	* the function call into UGASAbilitySystemGlobals::GASGet() is cheaper than calling FGameplayTag::RequestGameplayTag().
+	* Classes can access them by UGASAbilitySystemGlobals::GASGet().DeadTag
 	* We're not using this in this sample project (classes are manually caching in their constructors), but it's here as a reference.
 	*/
 
@@ -31,7 +31,7 @@ class GASBASE_API UGASAbilitySystemGlobals : public UAbilitySystemGlobals
 	UPROPERTY()
 	FGameplayTag KnockedDownTag;
 
-	static UGASAbilitySystemGlobals& GSGet()
+	static UGASAbilitySystemGlobals& GASGet()
 	{
 		return dynamic_cast<UGASAbilitySystemGlobals&>(Get());
 	}

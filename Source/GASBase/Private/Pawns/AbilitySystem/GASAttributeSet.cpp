@@ -8,6 +8,7 @@
 #include "Player/GASPlayerController.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
+#include "LogGASBase.h"
 
 UGASAttributeSet::UGASAttributeSet()
 {
@@ -104,7 +105,7 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 
 			if (!TargetCharacter->IsAlive())
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
+				FLogGASBase::Warning(FString(__FUNCTION__) + "() " + TargetCharacter->GetName() + " is NOT alive when receiving damage");
 			}
 
 			// Apply the health change and then clamp it
@@ -114,7 +115,7 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			if (TargetCharacter && WasAlive)
 			{
 				// This is the log statement for damage received. Turned off for live games.
-				//UE_LOG(LogTemp, Log, TEXT("%s() %s Damage Received: %f"), TEXT(__FUNCTION__), *GetOwningActor()->GetName(), LocalDamageDone);
+				FLogGASBase::Warning(FString(__FUNCTION__) + "() " + GetOwningActor()->GetName() + " Damage Received: " + FString::SanitizeFloat(LocalDamageDone));
 
 
 				// Show damage number for the Source player unless it was self damage

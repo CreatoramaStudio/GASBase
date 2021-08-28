@@ -50,7 +50,7 @@ void UAbilityTask_MoveSceneComponent::TickTask(float DeltaTime)
 			EndTask();
 		}
 
-		float CurrentTime = GetWorld()->GetTimeSeconds();
+		const float CurrentTime = GetWorld()->GetTimeSeconds();
 
 		if (CurrentTime >= TimeMoveWillEnd)
 		{

@@ -4,6 +4,7 @@
 #include "Pawns/AbilitySystem/Abilities/AbilityTasks/AbilityTask_PlayMontageWaitEvent.h"
 
 #include "AbilitySystemGlobals.h"
+#include "LogGASBase.h"
 #include "GameFramework/Character.h"
 #include "Pawns/AbilitySystem/GASAbilitySystemComponent.h"
 
@@ -155,20 +156,20 @@ void UAbilityTask_PlayMontageWaitEvent::Activate()
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("UGDAbilityTask_PlayMontageAndWaitForEvent call to PlayMontage failed!"));
+			FLogGASBase::Warning("UGDAbilityTask_PlayMontageAndWaitForEvent call to PlayMontage failed!");
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("UGDAbilityTask_PlayMontageAndWaitForEvent called on invalid AbilitySystemComponent"));
+		FLogGASBase::Warning("UGDAbilityTask_PlayMontageAndWaitForEvent called on invalid AbilitySystemComponent");
 	}
 
 	if (!bPlayedMontage)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("UGDAbilityTask_PlayMontageAndWaitForEvent called in Ability %s failed to play montage %s; Task Instance Name %s."), *Ability->GetName(), *GetNameSafe(MontageToPlay), *InstanceName.ToString());
+		FLogGASBase::Warning("UGDAbilityTask_PlayMontageAndWaitForEvent called in Ability " + Ability->GetName() + " failed to play montage " + GetNameSafe(MontageToPlay) + "; Task Instance Name " + InstanceName.ToString());
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
-			//ABILITY_LOG(Display, TEXT("%s: OnCancelled"), *GetName());
+			FLogGASBase::Info(GetName() + ": OnCancelled");
 			OnCancelled.Broadcast(FGameplayTag(), FGameplayEventData());
 		}
 	}
