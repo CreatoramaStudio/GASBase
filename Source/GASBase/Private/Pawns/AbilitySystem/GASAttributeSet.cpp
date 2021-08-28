@@ -129,7 +129,7 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 
 				if (!TargetCharacter->IsAlive())
 				{
-					// TargetCharacter was alive before this damage and now is not alive, give XP and Gold bounties to Source.
+					// TargetCharacter was alive before this damage and now is not alive, give XP and Money bounties to Source.
 					// Don't give bounty to self.
 					if (SourceController != TargetController)
 					{
@@ -145,10 +145,10 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 						InfoXP.ModifierOp = EGameplayModOp::Additive;
 						InfoXP.Attribute = UGASAttributeSet::GetXPAttribute();
 
-						FGameplayModifierInfo& InfoGold = GEBounty->Modifiers[Index + 1];
-						InfoGold.ModifierMagnitude = FScalableFloat(GetGoldBounty());
-						InfoGold.ModifierOp = EGameplayModOp::Additive;
-						InfoGold.Attribute = UGASAttributeSet::GetGoldAttribute();
+						FGameplayModifierInfo& InfoMoney = GEBounty->Modifiers[Index + 1];
+						InfoMoney.ModifierMagnitude = FScalableFloat(GetMoneyBounty());
+						InfoMoney.ModifierOp = EGameplayModOp::Additive;
+						InfoMoney.Attribute = UGASAttributeSet::GetMoneyAttribute();
 
 						Source->ApplyGameplayEffectToSelf(GEBounty, 1.0f, Source->MakeEffectContext());
 					}
@@ -176,8 +176,8 @@ void UGASAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, CharacterLevel, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, XP, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, XPBounty, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, Gold, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, GoldBounty, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, Money, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UGASAttributeSet, MoneyBounty, COND_None, REPNOTIFY_Always);
 }
 
 void UGASAttributeSet::AdjustAttributeForMaxChange(const FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, const float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty) const
@@ -229,12 +229,12 @@ void UGASAttributeSet::OnRep_XPBounty(const FGameplayAttributeData& OldXPBounty)
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, XPBounty, OldXPBounty);
 }
 
-void UGASAttributeSet::OnRep_Gold(const FGameplayAttributeData& OldGold)
+void UGASAttributeSet::OnRep_Money(const FGameplayAttributeData& OldMoney)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, Gold, OldGold);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, Money, OldMoney);
 }
 
-void UGASAttributeSet::OnRep_GoldBounty(const FGameplayAttributeData& OldGoldBounty)
+void UGASAttributeSet::OnRep_MoneyBounty(const FGameplayAttributeData& OldMoneyBounty)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, GoldBounty, OldGoldBounty);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UGASAttributeSet, MoneyBounty, OldMoneyBounty);
 }

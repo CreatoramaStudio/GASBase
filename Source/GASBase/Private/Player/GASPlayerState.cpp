@@ -85,14 +85,14 @@ int32 AGASPlayerState::GetXPBounty() const
 	return AttributeSet->GetXPBounty();
 }
 
-int32 AGASPlayerState::GetGold() const
+int32 AGASPlayerState::GetMoney() const
 {
-	return AttributeSet->GetGold();
+	return AttributeSet->GetMoney();
 }
 
-int32 AGASPlayerState::GetGoldBounty() const
+int32 AGASPlayerState::GetMoneyBounty() const
 {
-	return AttributeSet->GetGoldBounty();
+	return AttributeSet->GetMoneyBounty();
 }
 
 void AGASPlayerState::BeginPlay()
@@ -106,7 +106,7 @@ void AGASPlayerState::BeginPlay()
 		MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetMaxHealthAttribute()).AddUObject(this, &AGASPlayerState::MaxHealthChanged);
 		HealthRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthRegenRateAttribute()).AddUObject(this, &AGASPlayerState::HealthRegenRateChanged);
 		XPChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetXPAttribute()).AddUObject(this, &AGASPlayerState::XPChanged);
-		GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetGoldAttribute()).AddUObject(this, &AGASPlayerState::GoldChanged);
+		MoneyChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetMoneyAttribute()).AddUObject(this, &AGASPlayerState::MoneyChanged);
 		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetCharacterLevelAttribute()).AddUObject(this, &AGASPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
@@ -149,9 +149,9 @@ void AGASPlayerState::XPChanged(const FOnAttributeChangeData& Data)
 
 }
 
-void AGASPlayerState::GoldChanged(const FOnAttributeChangeData& Data)
+void AGASPlayerState::MoneyChanged(const FOnAttributeChangeData& Data)
 {
-	float Gold = Data.NewValue;
+	float Money = Data.NewValue;
 
 }
 

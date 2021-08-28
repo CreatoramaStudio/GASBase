@@ -41,7 +41,7 @@ protected:
 	FDelegateHandle MaxHealthChangedDelegateHandle;
 	FDelegateHandle HealthRegenRateChangedDelegateHandle;
 	FDelegateHandle XPChangedDelegateHandle;
-	FDelegateHandle GoldChangedDelegateHandle;
+	FDelegateHandle MoneyChangedDelegateHandle;
 	FDelegateHandle CharacterLevelChangedDelegateHandle;
 	
 private:
@@ -81,10 +81,10 @@ public:
 	int32 GetXPBounty() const;
 
 	UFUNCTION(BlueprintCallable, Category = "GASPlayerState|Attributes")
-	int32 GetGold() const;
+	int32 GetMoney() const;
 
 	UFUNCTION(BlueprintCallable, Category = "GASPlayerState|Attributes")
-	int32 GetGoldBounty() const;
+	int32 GetMoneyBounty() const;
 
 protected:
 
@@ -96,7 +96,7 @@ protected:
 	virtual void MaxHealthChanged(const FOnAttributeChangeData& Data);
 	virtual void HealthRegenRateChanged(const FOnAttributeChangeData& Data);
 	virtual void XPChanged(const FOnAttributeChangeData& Data);
-	virtual void GoldChanged(const FOnAttributeChangeData& Data);
+	virtual void MoneyChanged(const FOnAttributeChangeData& Data);
 	virtual void CharacterLevelChanged(const FOnAttributeChangeData& Data);
 
 	// Tag change callbacks

@@ -65,15 +65,15 @@ public:
 	FGameplayAttributeData XPBounty;
 	ATTRIBUTE_ACCESSORS(UGASAttributeSet, XPBounty)
 
-	// Gold gained from killing enemies. Used to purchase items (not implemented in this project).
-	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_Gold)
-	FGameplayAttributeData Gold;
-	ATTRIBUTE_ACCESSORS(UGASAttributeSet, Gold)
+	// Money gained from killing enemies. Used to purchase items (not implemented in this project).
+	UPROPERTY(BlueprintReadOnly, Category = "Money", ReplicatedUsing = OnRep_Money)
+	FGameplayAttributeData Money;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, Money)
 
-	// Gold awarded to the character's killer. Used to purchase items (not implemented in this project).
-	UPROPERTY(BlueprintReadOnly, Category = "Gold", ReplicatedUsing = OnRep_GoldBounty)
-	FGameplayAttributeData GoldBounty;
-	ATTRIBUTE_ACCESSORS(UGASAttributeSet, GoldBounty)
+	// Money awarded to the character's killer. Used to purchase items (not implemented in this project).
+	UPROPERTY(BlueprintReadOnly, Category = "Money", ReplicatedUsing = OnRep_MoneyBounty)
+	FGameplayAttributeData MoneyBounty;
+	ATTRIBUTE_ACCESSORS(UGASAttributeSet, MoneyBounty)
 
 protected:
 
@@ -115,10 +115,10 @@ protected:
 	virtual void OnRep_XPBounty(const FGameplayAttributeData& OldXPBounty);
 
 	UFUNCTION()
-	virtual void OnRep_Gold(const FGameplayAttributeData& OldGold);
+	virtual void OnRep_Money(const FGameplayAttributeData& OldMoney);
 
 	UFUNCTION()
-	virtual void OnRep_GoldBounty(const FGameplayAttributeData& OldGoldBounty);
+	virtual void OnRep_MoneyBounty(const FGameplayAttributeData& OldMoneyBounty);
 	
 private:
 	

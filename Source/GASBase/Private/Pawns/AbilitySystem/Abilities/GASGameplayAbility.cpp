@@ -18,7 +18,7 @@ void UGASGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo * ActorInf
 {
 	Super::OnAvatarSet(ActorInfo, Spec);
 
-	if (ActivateAbilityOnGranted)
+	if (bActivateAbilityOnGranted)
 	{
 		bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
 	}
