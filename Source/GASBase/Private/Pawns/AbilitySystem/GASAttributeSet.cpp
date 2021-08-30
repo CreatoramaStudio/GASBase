@@ -49,8 +49,16 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
 		TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
-		TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		TargetCharacter = Cast<AGASCharacter>(TargetActor);
+		TargetController = TargetCharacter ? TargetCharacter->GetController() : Data.Target.AbilityActorInfo->PlayerController.Get();
+		
+		if (!TargetController && TargetActor)
+		{
+			if (const APawn* Pawn = Cast<APawn>(TargetActor))
+			{
+				TargetController = Pawn->GetController();
+			}
+		}
 	}
 
 	// Get the Source actor
@@ -60,23 +68,15 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	if (Source && Source->AbilityActorInfo.IsValid() && Source->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		SourceActor = Source->AbilityActorInfo->AvatarActor.Get();
-		SourceController = Source->AbilityActorInfo->PlayerController.Get();
-		if (SourceController == nullptr && SourceActor != nullptr)
+		SourceCharacter = Cast<AGASCharacter>(SourceActor);
+		SourceController = SourceCharacter ? SourceCharacter->GetController() : Source->AbilityActorInfo->PlayerController.Get();
+		
+		if (!SourceController && SourceActor)
 		{
 			if (const APawn* Pawn = Cast<APawn>(SourceActor))
 			{
 				SourceController = Pawn->GetController();
 			}
-		}
-
-		// Use the controller to find the source pawn
-		if (SourceController)
-		{
-			SourceCharacter = Cast<AGASCharacter>(SourceController->GetPawn());
-		}
-		else
-		{
-			SourceCharacter = Cast<AGASCharacter>(SourceActor);
 		}
 
 		// Set the causer actor based on context if it's set
@@ -143,12 +143,12 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 						FGameplayModifierInfo& InfoXP = GEBounty->Modifiers[Index];
 						InfoXP.ModifierMagnitude = FScalableFloat(GetXPBounty());
 						InfoXP.ModifierOp = EGameplayModOp::Additive;
-						InfoXP.Attribute = UGASAttributeSet::GetXPAttribute();
+						InfoXP.Attribute = GetXPAttribute();
 
 						FGameplayModifierInfo& InfoMoney = GEBounty->Modifiers[Index + 1];
 						InfoMoney.ModifierMagnitude = FScalableFloat(GetMoneyBounty());
 						InfoMoney.ModifierOp = EGameplayModOp::Additive;
-						InfoMoney.Attribute = UGASAttributeSet::GetMoneyAttribute();
+						InfoMoney.Attribute = GetMoneyAttribute();
 
 						Source->ApplyGameplayEffectToSelf(GEBounty, 1.0f, Source->MakeEffectContext());
 					}
