@@ -23,3 +23,8 @@ void UGASGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo * ActorInf
 		bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
 	}
 }
+
+FGameplayTagContainer UGASGameplayAbility::GetAbilityTags()
+{
+	return AbilityTags;
+}

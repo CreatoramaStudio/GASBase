@@ -73,6 +73,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASCharacter")
     virtual bool IsAlive() const;
 
+	UFUNCTION(BlueprintPure, Category = "GASCharacter")
+	virtual TArray<UGASGameplayAbility*> GetAbilities();
+
 	// Switch on AbilityID to return individual ability levels. Hardcoded to 1 for every ability in this project.
 	UFUNCTION(BlueprintCallable, Category = "GASCharacter")
     virtual int32 GetAbilityLevel(EGASAbilityInputID AbilityID) const;

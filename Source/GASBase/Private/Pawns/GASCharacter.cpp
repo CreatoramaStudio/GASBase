@@ -53,6 +53,29 @@ bool AGASCharacter::IsAlive() const
 	return GetHealth() > 0.0f;
 }
 
+TArray<UGASGameplayAbility*> AGASCharacter::GetAbilities()
+{
+	TArray<UGASGameplayAbility*> Abilities;
+	
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || !AbilitySystemComponent->CharacterAbilitiesGiven)
+	{
+		return Abilities;
+	}
+
+	for (const FGameplayAbilitySpec& Spec : AbilitySystemComponent->GetActivatableAbilities())
+	{
+		if (Spec.SourceObject == this && CharacterAbilities.Contains(Spec.Ability->GetClass()))
+		{
+			if (UGASGameplayAbility* Ability = Cast<UGASGameplayAbility>(Spec.Ability))
+			{
+				Abilities.Add(Ability);
+			}
+		}
+	}
+
+	return Abilities;
+}
+
 int32 AGASCharacter::GetAbilityLevel(EGASAbilityInputID AbilityID) const
 {
 	return 1;
