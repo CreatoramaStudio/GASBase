@@ -6,4 +6,5 @@
 AGASAIController::AGASAIController()
 {
 	bWantsPlayerState = true;
+	bAttachToPawn = true;
 }

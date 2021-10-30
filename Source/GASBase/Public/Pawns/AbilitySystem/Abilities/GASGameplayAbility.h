@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class GASBASE_API UGASGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()

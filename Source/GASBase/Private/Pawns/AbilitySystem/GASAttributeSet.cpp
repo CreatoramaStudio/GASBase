@@ -9,6 +9,8 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
 #include "LogGASBase.h"
+#include "Pawns/Components/GASAbilityComponent.h"
+#include "Pawns/Components/GASAttributeComponent.h"
 
 UGASAttributeSet::UGASAttributeSet()
 {
@@ -45,38 +47,48 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	// Get the Target actor, which should be our owner
 	AActor* TargetActor = nullptr;
 	AController* TargetController = nullptr;
-	AGASCharacter* TargetCharacter = nullptr;
+	APawn* TargetPawn = nullptr;
+	UGASAttributeComponent* TargetGASAttributeComponent = nullptr;
+	UGASAbilityComponent* TargetGASAbilityComponent = nullptr;
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
 		TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
-		TargetCharacter = Cast<AGASCharacter>(TargetActor);
-		TargetController = TargetCharacter ? TargetCharacter->GetController() : Data.Target.AbilityActorInfo->PlayerController.Get();
 		
-		if (!TargetController && TargetActor)
+		if (TargetActor)
 		{
-			if (const APawn* Pawn = Cast<APawn>(TargetActor))
-			{
-				TargetController = Pawn->GetController();
-			}
+			TargetPawn = Cast<APawn>(TargetActor);
+		}
+		
+		TargetController = TargetPawn ? TargetPawn->GetController() : Data.Target.AbilityActorInfo->PlayerController.Get();
+		
+		if (TargetPawn)
+		{
+			TargetGASAttributeComponent = Cast<UGASAttributeComponent>(TargetPawn->GetComponentByClass(UGASAttributeComponent::StaticClass()));
+			TargetGASAbilityComponent = Cast<UGASAbilityComponent>(TargetPawn->GetComponentByClass(UGASAbilityComponent::StaticClass()));
 		}
 	}
 
 	// Get the Source actor
 	AActor* SourceActor = nullptr;
 	AController* SourceController = nullptr;
-	AGASCharacter* SourceCharacter = nullptr;
+	APawn* SourcePawn = nullptr;
+	UGASAttributeComponent* SourceGASAttributeComponent = nullptr;
+	UGASAbilityComponent* SourceGASAbilityComponent = nullptr;
 	if (Source && Source->AbilityActorInfo.IsValid() && Source->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		SourceActor = Source->AbilityActorInfo->AvatarActor.Get();
-		SourceCharacter = Cast<AGASCharacter>(SourceActor);
-		SourceController = SourceCharacter ? SourceCharacter->GetController() : Source->AbilityActorInfo->PlayerController.Get();
 		
-		if (!SourceController && SourceActor)
+		if (SourceActor)
 		{
-			if (const APawn* Pawn = Cast<APawn>(SourceActor))
-			{
-				SourceController = Pawn->GetController();
-			}
+			SourcePawn = Cast<APawn>(SourceActor);
+		}
+		
+		SourceController = SourcePawn ? SourcePawn->GetController() : Source->AbilityActorInfo->PlayerController.Get();
+
+		if (SourcePawn)
+		{
+			SourceGASAttributeComponent = Cast<UGASAttributeComponent>(SourcePawn->GetComponentByClass(UGASAttributeComponent::StaticClass()));
+			SourceGASAbilityComponent = Cast<UGASAbilityComponent>(SourcePawn->GetComponentByClass(UGASAbilityComponent::StaticClass()));
 		}
 
 		// Set the causer actor based on context if it's set
@@ -98,21 +110,21 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			// This prevents damage being added to dead things and replaying death animations
 			bool WasAlive = true;
 
-			if (TargetCharacter)
+			if (TargetGASAttributeComponent)
 			{
-				WasAlive = TargetCharacter->IsAlive();
+				WasAlive = TargetGASAttributeComponent->IsAlive();
 			}
 
-			if (!TargetCharacter->IsAlive())
+			if (!TargetGASAttributeComponent->IsAlive())
 			{
-				FLogGASBase::Warning(FString(__FUNCTION__) + "() " + TargetCharacter->GetName() + " is NOT alive when receiving damage");
+				FLogGASBase::Warning(FString(__FUNCTION__) + "() " + TargetGASAttributeComponent->GetName() + " is NOT alive when receiving damage");
 			}
 
 			// Apply the health change and then clamp it
 			const float NewHealth = GetHealth() - LocalDamageDone;
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 
-			if (TargetCharacter && WasAlive)
+			if (TargetGASAttributeComponent && WasAlive)
 			{
 				// This is the log statement for damage received. Turned off for live games.
 				FLogGASBase::Warning(FString(__FUNCTION__) + "() " + GetOwningActor()->GetName() + " Damage Received: " + FString::SanitizeFloat(LocalDamageDone));
@@ -127,7 +139,7 @@ void UGASAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 					}
 				}
 
-				if (!TargetCharacter->IsAlive())
+				if (!TargetGASAttributeComponent->IsAlive())
 				{
 					// TargetCharacter was alive before this damage and now is not alive, give XP and Money bounties to Source.
 					// Don't give bounty to self.

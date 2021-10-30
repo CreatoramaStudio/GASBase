@@ -6,6 +6,7 @@
 #include "Pawns/GASCharacter.h"
 #include "Pawns/AbilitySystem/GASAbilitySystemComponent.h"
 #include "Pawns/AbilitySystem/GASAttributeSet.h"
+#include "Pawns/Components/GASAttributeComponent.h"
 
 FName AGASPlayerState::AbilitySystemComponentName(TEXT("AbilitySystemComponent"));
 FName AGASPlayerState::AttributeSetName(TEXT("AttributeSet"));
@@ -124,9 +125,9 @@ void AGASPlayerState::HealthChanged(const FOnAttributeChangeData& Data)
 	// If the player died, handle death
 	if (!IsAlive() && !AbilitySystemComponent->HasMatchingGameplayTag(DeadTag))
 	{
-		if (AGASCharacter* Character = Cast<AGASCharacter>(GetPawn()))
+		if (UGASAttributeComponent* GASAttributeComponent = Cast<UGASAttributeComponent>(GetPawn()->GetComponentByClass(UGASAttributeComponent::StaticClass())))
 		{
-			Character->Die();
+			GASAttributeComponent->Die();
 		}
 	}
 }
