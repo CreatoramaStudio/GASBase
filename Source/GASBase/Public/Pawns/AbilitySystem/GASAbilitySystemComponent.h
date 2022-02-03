@@ -32,6 +32,8 @@ public:
 	// Called from PPDamageExecCalculation. Broadcasts on ReceivedDamage whenever this ASC receives damage.
 	virtual void ReceiveDamage(UGASAbilitySystemComponent* Source, float UnmitigatedDamage, float MitigatedDamage);
 
+	virtual void AbilityLocalInputPressed(int32 InputID) override;
+
 protected:
 
 private:

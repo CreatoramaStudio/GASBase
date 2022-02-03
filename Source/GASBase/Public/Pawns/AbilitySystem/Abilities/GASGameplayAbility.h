@@ -28,6 +28,9 @@ public:
 	// Tells an ability to activate immediately when its granted. Used for passive abilities and abilities forced on others.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
 	bool bActivateAbilityOnGranted = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
+	bool bActivateOnInput = true;
 	
 protected:
 

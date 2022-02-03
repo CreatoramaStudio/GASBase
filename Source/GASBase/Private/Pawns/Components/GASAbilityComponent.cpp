@@ -170,12 +170,11 @@ void UGASAbilityComponent::OnPlayerState(APawn* Pawn)
 	}
 }
 
-void UGASAbilityComponent::BindASCInput(const APawn* Pawn)
+void UGASAbilityComponent::BindASCInput(const APawn* Pawn,const FString InputEnumName,const FString ConfirmTargetInputName,const FString CancelTargetInputName,const int32 ConfirmTargetInputID,const int32 CancelTargetInputID)
 {
 	if (!bAbilitySystemComponentInputBound && AbilitySystemComponent && IsValid(Pawn->InputComponent))
 	{
-		AbilitySystemComponent->BindAbilityActivationToInputComponent(Pawn->InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"),
-			FString("CancelTarget"), FString("EGASAbilityInputID"), static_cast<int32>(EGASAbilityInputID::Confirm), static_cast<int32>(EGASAbilityInputID::Cancel)));
+		AbilitySystemComponent->BindAbilityActivationToInputComponent(Pawn->InputComponent, FGameplayAbilityInputBinds(ConfirmTargetInputName,CancelTargetInputName, InputEnumName, ConfirmTargetInputID, CancelTargetInputID));
 
 		bAbilitySystemComponentInputBound = true;
 	}

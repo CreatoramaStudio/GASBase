@@ -55,6 +55,13 @@ void AGASCharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AGASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	//AbilityComponent->BindASCInput(this);
+}
+
 void AGASCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
@@ -62,6 +69,7 @@ void AGASCharacter::OnRep_PlayerState()
 	if (AbilityComponent)
 	{
 		AbilityComponent->OnPlayerState(this);
+		//AbilityComponent->BindASCInput(this);
 	}
 }
 

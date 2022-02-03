@@ -72,7 +72,7 @@ public:
 	// Called from both SetupPlayerInputComponent and OnRep_PlayerState because of a potential race condition where the PlayerController might
 	// call ClientRestart which calls SetupPlayerInputComponent before the PlayerState is repeated to the client so the PlayerState would be null in SetupPlayerInputComponent.
 	// Conversely, the PlayerState might be repeated before the PlayerController calls ClientRestart so the Actor's InputComponent would be null in OnRep_PlayerState.
-	void BindASCInput(const APawn* Pawn);
+	void BindASCInput(const APawn* Pawn,const FString InputEnumName = "EGASAbilityInputID",const FString ConfirmTargetInputName = "ConfirmTarget",const FString CancelTargetInputName = "CancelTarget",const int32 ConfirmTargetInputID = static_cast<int32>(EGASAbilityInputID::Confirm),const int32 CancelTargetInputID = static_cast<int32>(EGASAbilityInputID::Cancel));
 
 protected:
 
