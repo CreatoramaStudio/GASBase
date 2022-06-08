@@ -40,7 +40,7 @@ void UAsyncTaskGameplayTagAddedRemoved::EndTask()
 	}
 
 	SetReadyToDestroy();
-	MarkPendingKill();
+	MarkAsGarbage();
 }
 
 void UAsyncTaskGameplayTagAddedRemoved::TagChanged(const FGameplayTag Tag, const int32 NewCount)
